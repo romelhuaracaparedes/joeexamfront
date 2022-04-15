@@ -1,0 +1,97 @@
+<div class="card">
+    <div class="card-header" *ngIf="isAddMode">REGISTRAR PRODUCTO</div>
+    <div class="card-header" *ngIf="!isAddMode">ACTUALIZAR PRODUCTO</div>
+    <div class="card-body">
+
+        <form [formGroup]="frmRegistro" (ngSubmit)="onSubmit()">
+            <div class="form-group row mb-3">
+                <label for="nombre" class="col-form-label col-sm-2">Nombre</label>
+                <div class="col-sm-6">
+                    <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f().name.errors }" />
+                    <span class="text-danger" *ngIf="(f().name.touched || submitted) && f().name.errors?.required">
+                        El nombre es requerido
+                    </span>
+                    <span class="text-danger" *ngIf="(f().name.touched || submitted) && f().name.errors?.minlength">
+                        El nombre debe tener al menos 5 caracteres
+                    </span>
+                </div>
+            </div>
+            <div class="form-group row mb-3">
+                <label for="tipo" class="col-form-label col-sm-2">Tipo</label>
+                <div class="col-sm-6">
+                    <select class="form-select" formControlName="type" [ngClass]="{ 'is-invalid': submitted && f().type.errors }">
+                        <option  value="" disabled>--Seleccione tipo-</option>
+                        <option  value="{{category.id}}" *ngFor="let category of categories">{{category.name}}</option>
+                    </select>
+                    <span class="text-danger" *ngIf="(f().type.touched || submitted) && f().type.errors?.required">
+                        Tipo es requerido
+                    </span>
+                </div>
+            </div>
+            <div class="form-group row mb-3">
+                <label for="codigo" class="col-form-label col-sm-2">Código</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" formControlName="code" [ngClass]="{ 'is-invalid': submitted && f().code.errors }">
+                    <span class="text-danger" *ngIf="(f().code.touched || submitted) && f().code.errors?.required">
+                        Código es requerido
+                    </span>
+                    <span class="text-danger" *ngIf="(f().code.touched || submitted) && f().code.errors?.minlength">
+                        El código debe tener al menos 5 caracteres
+                    </span>
+                </div>
+            </div>
+            <div class="form-group row mb-3">
+                <label for="descripcion" class="col-form-label col-sm-2">Descripción</label>
+                <div class="col-sm-6">
+                    <textarea name="descripcion" class="form-control" rows="10" formControlName="description" [ngClass]="{ 'is-invalid': submitted && f().description.errors }"></textarea>
+                    <span class="text-danger" *ngIf="(f().description.touched || submitted) && f().description.errors?.required">
+                        Descripción es requerida
+                    </span>
+                    <span class="text-danger" *ngIf="(f().description.touched || submitted) && f().description.errors?.minlength">
+                        El código debe tener al menos 5 caracteres
+                    </span>
+                </div>
+            </div>
+            <div class="form-group row mb-3">
+                <label for="precio" class="col-form-label col-sm-2">Precio</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" formControlName="price" [ngClass]="{ 'is-invalid': submitted && f().price.errors }">
+                    <span class="text-danger" *ngIf="(f().price.touched || submitted) && f().price.errors?.required">
+                        El precio es requerido
+                    </span>
+                    <span class="text-danger" *ngIf="(f().price.touched || submitted) && f().price.errors?.pattern">
+                        Debe ingresar un número válido.
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="d-grid gap-2 d-md-block">
+                    <!-- <button class="btn btn-primary" *ngIf="!product.id else elseBlock">{{product.id}}</button>
+                    <ng-template #elseBlock>
+                        <button class="btn btn-primary" (click)="update()" role="button" [disabled]="!frmRegistro.valid">Actualizar</button>
+                    </ng-template> -->
+                    <button type="submit" class="btn btn-primary space" [disabled]="loading" *ngIf="!id else elseBlock">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                        Registrar
+                    </button>
+                    <ng-template #elseBlock>
+                        <button type="submit" [disabled]="loading" class="btn btn-primary space">
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                            Actualizar
+                        </button>
+                        <button type="button" (click)="delete()" class="btn btn-danger space">
+                            Eliminar
+                        </button>
+                    </ng-template>
+
+                    <a routerLink="/products" class="btn btn-warning">Cancel</a>
+
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>

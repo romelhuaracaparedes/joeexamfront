@@ -1,0 +1,36 @@
+<div class="card border-primary ">
+    <div class="card-header">Listado de productos</div>
+    <div class="card-body text-primary">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button class="btn btn-rounded btn-primary mb-5 " type="button" [routerLink]="['/products/form']"><i class="fa fa-plus" aria-hidden="true"></i> Nuevo producto</button>
+        </div>
+        <form [formGroup]="frmList">
+            <div class="input-group mb-3 ">
+                <input type="text" class="form-control" formControlName="name" placeholder="Ingrese el nombre del producto">
+                <button class="btn btn-outline-primary" type="button" (click)="limpiar()">Limpiar</button>
+            </div>
+        </form>
+
+        <!-- <div *ngIf="clientes.length==0" class="alert alert-info">
+            No hay registros en la base de datos.
+        </div> -->
+        <!-- <table class="table table-bordered table-striped" *ngIf="clientes.length>0"> -->
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let product of products">
+                    <td>{{product.code}}</td>
+                    <td><a [routerLink]="['/products/form', product.id]">{{product.name}}</a></td>
+                    <td>{{product.price}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
